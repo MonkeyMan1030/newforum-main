@@ -1,0 +1,9 @@
+forum-website/
+├── index.html
+├── css/
+│   └── styles.css
+├── js/
+│   ├── auth.js
+│   ├── posts.js
+│   ├── threads.js
+│   └── interactions.js 

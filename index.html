@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum Website</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Forum</div>
+            <div class="nav-links">
+                <div id="auth-section">
+                    <button id="login-btn" class="auth-btn">Login</button>
+                    <button id="register-btn" class="auth-btn">Register</button>
+                </div>
+                <div id="user-section" class="hidden">
+                    <span id="username-display"></span>
+                    <button id="logout-btn">Logout</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Auth Modal -->
+        <div id="auth-modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div id="login-form">
+                    <h2>Login</h2>
+                    <input type="email" id="login-email" placeholder="Email">
+                    <input type="password" id="login-password" placeholder="Password">
+                    <button id="submit-login">Login</button>
+                </div>
+                <div id="register-form" class="hidden">
+                    <h2>Register</h2>
+                    <input type="text" id="register-username" placeholder="Username">
+                    <input type="email" id="register-email" placeholder="Email">
+                    <input type="password" id="register-password" placeholder="Password">
+                    <button id="submit-register">Register</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thread Section -->
+        <section id="threads-section">
+            <div class="thread-controls">
+                <button id="new-thread-btn" class="hidden">New Thread</button>
+                <select id="thread-filter">
+                    <option value="all">All Categories</option>
+                </select>
+            </div>
+            <div id="threads-list"></div>
+        </section>
+
+        <!-- Posts Section -->
+        <section id="posts-section">
+            <div class="post-controls hidden">
+                <button id="new-post-btn">New Post</button>
+            </div>
+            <div id="posts-list"></div>
+        </section>
+
+        <!-- New Post Modal -->
+        <div id="post-modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Create New Post</h2>
+                <input type="text" id="post-title" placeholder="Title">
+                <textarea id="post-content" placeholder="Content"></textarea>
+                <input type="file" id="post-media" accept="image/*,video/*">
+                <button id="submit-post">Post</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/posts.js"></script>
+    <script src="js/threads.js"></script>
+    <script src="js/interactions.js"></script>
+</body>
+</html> 
