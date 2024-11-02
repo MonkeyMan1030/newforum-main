@@ -1,16 +1,16 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
-export default function Register() {
+export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState(false)
   
   const navigate = useNavigate()
-  const { signUp } = useAuth()
+  const location = useLocation()
+  const { signIn } = useAuth()
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -18,39 +18,21 @@ export default function Register() {
     setError(null)
 
     try {
-      await signUp(email, password)
-      setSuccess(true)
+      await signIn(email, password)
+      const returnTo = (location.state as any)?.returnTo || '/'
+      navigate(returnTo)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to create account')
+      setError(err instanceof Error ? err.message : 'Failed to sign in')
     } finally {
       setLoading(false)
     }
   }
 
-  if (success) {
-    return (
-      <div className="auth-container">
-        <div className="auth-card">
-          <h1>Check Your Email</h1>
-          <p className="auth-description">
-            We've sent you an email with a link to confirm your account.
-          </p>
-          <button 
-            onClick={() => navigate('/login')} 
-            className="btn-secondary"
-          >
-            Return to Login
-          </button>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h1>Create Account</h1>
-        <p className="auth-description">Sign up for a new account</p>
+        <h1>Welcome Back</h1>
+        <p className="auth-description">Sign in to your account</p>
 
         {error && (
           <div className="error-message" role="alert">
@@ -80,13 +62,9 @@ export default function Register() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              minLength={6}
-              placeholder="Choose a password"
+              placeholder="Enter your password"
               disabled={loading}
             />
-            <small className="help-text">
-              Password must be at least 6 characters
-            </small>
           </div>
 
           <button 
@@ -94,14 +72,14 @@ export default function Register() {
             className="btn-primary"
             disabled={loading}
           >
-            {loading ? 'Creating Account...' : 'Create Account'}
+            {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
 
         <p className="auth-footer">
-          Already have an account?{' '}
-          <a href="/login" className="link">
-            Sign in
+          Don't have an account?{' '}
+          <a href="/register" className="link">
+            Sign up
           </a>
         </p>
       </div>
